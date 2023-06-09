@@ -13,6 +13,7 @@ import java.io.*;
 
 import ma02_resources.participants.InstituitionType;
 import participants.ContactImpl;
+import project.CblManagement;
 
 
 public class ProgramaCBL {
@@ -40,6 +41,37 @@ public class ProgramaCBL {
         } while (option < min || option > max);
 
         return option;
+    }
+
+    public static void cblStats(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Cbl Statistic Menu:\n 1 - Get Edition With Projects Missing Submissions\n " +
+                    "2 - Get Projects With Missing Submissions\n 3 - Get Number Of Editions\n 4 - Get Number Of Projects in Edition" +
+                    "\n 5 - Get Edition Progress\n 6 - Get Project Progress in Edition\n 7 - List Edition Information" +
+                    "\n 8 - List Project Information By Edition\n 9 - List Project Status By Edition \nOption: ", 0, 9);
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    editionManagementMenu(reader);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+            }
+        } while (option != 0);
     }
 
     public static void participantManagementMenu(BufferedReader reader) throws IOException{
@@ -119,32 +151,40 @@ public class ProgramaCBL {
         } while (option != 0);
     }
 
-    public static void cblManagementMenu(BufferedReader reader) throws IOException{
+    public static void cblManagementMenu(BufferedReader reader, CblManagement Cbl) throws IOException{
         int option;
         do{
             option = menuRead(reader, "Cbl Menu:\n 1 - Add Edition\n 2 - Remove Edition\n 3 - Get Edition\n 4 - Set Active Edition" +
                     "\n 5 - Add Project to Edition\n 6 - Add Submission to Project\n 7 - Cbl Stats\n Option: ", 0, 7);
             switch(option){
                 case 1:
+                    //Cbl.addEdition();
                     break;
                 case 2:
+                    //Cbl.removeEdition();
                     break;
                 case 3:
-                    editionManagementMenu(reader);
+                    //editionManagementMenu(reader);
                     break;
                 case 4:
+                    //Cbl.setActiveEdition();
                     break;
                 case 5:
+                    //Cbl.addProjectToEdition();
                     break;
                 case 6:
+                    //Cbl.addProjectSubmissionToActiveEdition();
                     break;
                 case 7:
+                    cblStats(reader);
                     break;
             }
         } while (option != 0);
     }
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        cblManagementMenu(reader);
+        CblManagement Cbl = new CblManagement();
+
+        cblManagementMenu(reader, Cbl);
     }
 }
