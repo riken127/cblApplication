@@ -1,21 +1,150 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Nome: <João Pedro Salgado Pereira>
+ * Número: <8220102>
+ * Turma: <LEI1T4>
+ *
+ * Nome: <José Henrique Noronha Oliveira e Silva>
+ * Número: <8220343>
+ * Turma: <LEI1T4>
  */
 package programacbl;
 
+import java.io.*;
 
-/**
- *
- * @author noronha
- */
+import ma02_resources.participants.InstituitionType;
+import participants.ContactImpl;
+
+
 public class ProgramaCBL {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       
+    public static int menuRead(BufferedReader reader, String message, int min, int max) {
+        int option;
+        do {
+            System.out.print(message);
+            try {
+                String input = reader.readLine();
+                if (input.equals("0")) {
+                    return 0;
+                }
+                option = Integer.parseInt(input);
+                if (option < min || option > max) {
+                    System.out.println("Opção inválida. Tente novamente.");
+                }
+            } catch (IOException e) {
+                System.out.println("Erro ao ler a opção. Tente novamente.");
+                option = -1;
+            } catch (NumberFormatException e) {
+                System.out.println("Opção inválida. Tente novamente.");
+                option = -1;
+            }
+        } while (option < min || option > max);
+
+        return option;
     }
-    
+
+    public static void participantManagementMenu(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Participant Menu:\n 1 - Nao sei oq por\n Option: ", 0, 1);
+            switch(option){
+                case 1:
+                    break;
+            }
+        } while (option != 0);
+    }
+
+    public static void tasksManagementMenu(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Task Menu:\n 1 - Add Submission\n 2 - Extend DeadLine\n Option: ", 0, 2);
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+        } while (option != 0);
+    }
+
+    public static void projectManagementMenu(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Project Menu:\n 1 - Add Participant\n 2 - Remove Participant\n 3 - Get Participant\n" +
+                    " 4 - Get Number Of Participants  \n 5 - Add Tag  \n 6 - Add Task \n 7 - Get Task \n" +
+                    " 8 - Is Completed?\n Option: ", 0, 8);
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    participantManagementMenu(reader);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    tasksManagementMenu(reader);
+                    break;
+                case 8:
+                    break;
+            }
+        } while (option != 0);
+    }
+    public static void editionManagementMenu(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Edition Menu:\n 1 - Add Project\n 2 - Remove Project\n 3 - Get Project\n 4 - Get Projects By Tag " +
+                    "\n 5 - Get Projects By Email \n 6 - Get Number Of Projects \n 7 - Get End\n Option: ", 0, 7);
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    projectManagementMenu(reader);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+        } while (option != 0);
+    }
+
+    public static void cblManagementMenu(BufferedReader reader) throws IOException{
+        int option;
+        do{
+            option = menuRead(reader, "Cbl Menu:\n 1 - Add Edition\n 2 - Remove Edition\n 3 - Get Edition\n 4 - Set Active Edition" +
+                    "\n 5 - Add Project to Edition\n 6 - Add Submission to Project\n 7 - Cbl Stats\n Option: ", 0, 7);
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    editionManagementMenu(reader);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+        } while (option != 0);
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        cblManagementMenu(reader);
+    }
 }
