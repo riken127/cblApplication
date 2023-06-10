@@ -22,205 +22,41 @@ import programacbl.Menu.*;
 public class CblMenu {
     CblManagement cbl;
     BufferedReader reader;
+    EditionMenu editionMenu;
 
     public CblMenu() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.cbl = new CblManagement();
+        this.editionMenu = new EditionMenu(cbl);
     }
 
-    private void cblStats() throws IOException {
-        int option;
-        do {
-            option = Helper.menuRead("Cbl Statistic Menu:\n 1 - Get Edition With Projects Missing Submissions\n " +
-                    "2 - Get Projects With Missing Submissions\n 3 - Get Number Of Projects in Edition" +
-                    "\n 4 - Get Edition Progress\n 5 - Get Project Progress in Edition\n 6 - List Edition Information" +
-                    "\n 7 - List Project Information By Edition\n 8 - List Project Status By Edition \nOption: ", 0, 9);
-            switch (option) {
-                case 1:
-                    // como devo utilizar o getEditionWIthProjectsMissingSubmissions?
-                    break;
-                case 2:
-                    // mesma situação que case 1.
-                    break;
-                case 3:
-                    /*
-                        Listar todas as edições.
-                     */
-                    try {
-                        System.out.println("Edition nº: ");
-                        String index = reader.readLine();
-                        int editionIndex = Integer.parseInt(index);
-
-                        System.out.println(cbl.returnNumberOfProjects(editionIndex));
-                    } catch (InvalidIndexException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    break;
-                case 4:
-                    /*
-                        Listar todas as edições.
-                     */
-                    try {
-                        System.out.println("Edition nº: ");
-                        String stringIndex = reader.readLine();
-                        int intIndex = Integer.parseInt(stringIndex);
-
-                        System.out.println(cbl.returnEditionProgress(intIndex));
-                    } catch (InvalidIndexException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case 5:
-                    /*
-                        Listar todas as edições.
-                     */
-                    try {
-                        System.out.println("Edition nº: ");
-                        String indexString = reader.readLine();
-                        int editionPosition = Integer.parseInt(indexString);
-                        if (cbl.returnEdition(editionPosition) != null) {
-                            /*
-                                Listar todos os projetos da edição (index).
-                             */
-
-                            System.out.println("Project name: ");
-                            String projectName = reader.readLine();
-                            System.out.println(cbl.returnProjectProgress(editionPosition, projectName));
-                        }
-                    } catch (InvalidIndexException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case 6:
-                    System.out.println(cbl.listEditionInformation());
-                    break;
-                case 7:
-                    System.out.println(cbl.listProjectInformationByEdition());
-                    break;
-                case 8:
-                    System.out.println(cbl.listProjectStatusByEdition());
-                    break;
+    private int returnIndexToActiveEdition(){
+        for(int i = 0;i<cbl.returnNumberOfEditions();i++){
+            if(cbl.returnEdition(i).getStatus().equals(Status.ACTIVE)){
+                return i;
             }
-        } while (option != 0);
+        }
+        return -1;
     }
-
-    private void tasksManagementMenu(CblManagement cbl, BufferedReader reader) throws IOException {
-        int option;
-        do {
-            option = Helper.menuRead("Task Menu:\n 1 - Add Submission\n 2 - Extend DeadLine\n Option: ", 0, 2);
-            switch (option) {
-                case 1:
-                    /**
-                     * List all tasks
-                     */
-                    break;
-                case 2:
-                    /**
-                     * List all tasks
-                     */
-                    break;
-            }
-        } while (option != 0);
-    }
-
-
-    private void addProjectHandler(int editionIndex) throws IOException {
-        //Listagem de todas as edições disponíveis (por número index).
-        System.out.println("Select the Edition");
-        String selectedEdition = reader.readLine();
-        int indexEdition = Integer.parseInt(selectedEdition);
-        if (cbl.returnEdition(indexEdition) != null) {
-            System.out.println("Type the given project name:");
-            String name = reader.readLine();
-            System.out.println("Type the given project description:");
-            String description = reader.readLine();
-            System.out.println("Type the given project tags (separate) by white spaces:");
-            String tagsString = reader.readLine();
-            String[] tags = tagsString.split(" ");
-            try {
-                cbl.addProjectToEdition(indexEdition, name, description, tags);
-            } catch (InvalidIndexException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            System.out.println("The given index is invalid.");
+    private void returnEditionsText(){
+        for(int i = 0;i<cbl.returnNumberOfEditions();i++){
+            System.out.println("Index - " + i + "\tName - " + cbl.returnEdition(i).getName());
         }
     }
-
-    private void removeProjectHandler(int editionIndex) throws IOException {
-
-    }
-    private void editionManagementMenu(int editionIndex) throws IOException {
-        int option;
-        Edition currentEdition = cbl.returnEdition(editionIndex);
-        do {
-            option = Helper.menuRead("Edition Menu:\n 1 - Add Project\n 2 - Remove Project\n 3 - Get Project\n 4 - Get Projects By Tag " +
-                    "\n 5 - Get Projects By Email \n 6 - Get Number Of Projects \n 7 - Get End Date.\n Option: ", 0, 7);
-            switch (option) {
-                case 1:
-                    addProjectHandler(editionIndex);
-                    break;
-                case 2:
-                    /*
-                     * Listagem de todos os projetos de uma dada edição.
-                     */
-                    try {
-                        System.out.println("Project name: ");
-                        String projectName = reader.readLine();
-                        currentEdition.removeProject(projectName);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("The given project name was not found.");
-                    }
-                    break;
-                case 3:
-                    /**
-                     Lista de todos os projetos disponíveis na edição.
-                     */
-                    try {
-                        System.out.println("Project name: ");
-                        String projectName = reader.readLine();
-                        projectManagementMenu(currentEdition.getProject(projectName));
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("The given project name was not found");
-                    }
-                    break;
-                case 4:
-                    /**
-                     Retorna um array de projetos, o que fazer?
-                     */
-                    break;
-                case 5:
-                    /**
-                     Retorna um array de projetos, o que fazer?
-                     */
-                    break;
-                case 6:
-                    System.out.println("Number of projects: " + currentEdition.getNumberOfProjects());
-                    break;
-                case 7:
-                    System.out.println("Edition End Date: " + currentEdition.getEnd());
-                    break;
-            }
-        } while (option != 0);
-    }
-
     private void addEditionHandler() {
         try {
             System.out.print("\nWrite the name:\t");
             String name = reader.readLine();
             System.out.print("\nWrite the start date(dd/MM/yyyy format)\t");
             String startDateString = reader.readLine();
-            System.out.println("\nWrite the end date(dd/MM/yyyy format)\t");
+            System.out.print("\nWrite the end date(dd/MM/yyyy format)\t");
             String endDateString = reader.readLine();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             LocalDate startDate = LocalDate.parse(startDateString, formatter);
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
 
-            System.out.println("\nWrite the desired project template:\t");
+            System.out.print("\nWrite the desired project template:\t");
             String projectTemplate = reader.readLine();
             cbl.addEdition(new EditionImpl(name, startDate, endDate, projectTemplate, Status.INACTIVE));
         } catch (DateTimeException e) {
@@ -233,30 +69,31 @@ public class CblMenu {
     }
 
     private void removeEditionHandler() throws IOException {
-        //Listagem de todas as edições disponiveis (por número index).
-        System.out.println("Select the Edition to remove:\t");
+        this.returnEditionsText();
+        System.out.print("Select the Edition to remove:\t");
         String inputEditionIndex = reader.readLine();
         int index = Integer.parseInt(inputEditionIndex);
         try {
             cbl.removeEdition(index);
         } catch (InvalidIndexException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
 
     }
 
     private void editEditionHandler() throws IOException {
-        /*
-         * Listagem de todas as edições disponíveis por número.
-         */
-        System.out.println("Edition:\t");
+        this.returnEditionsText();
+        System.out.println("Select the Edition to edit:\t");
         String indexString = reader.readLine();
         int index = Integer.parseInt(indexString);
-        editionManagementMenu(index);
+        if(index < cbl.returnNumberOfEditions()){
+            editionMenu.editionManagementMenu(index);
+        }
+        System.out.println("Edition Index not found");
     }
 
     private void setActiveEditionHandler() throws IOException {
-        //Listagem de todas as edições disponíveis (por número index).
+        this.returnEditionsText();
         System.out.println("Select the Edition to set Active:\t");
         String inputActiveEdition = reader.readLine();
         int indexActiveEdition = Integer.parseInt(inputActiveEdition);
@@ -267,10 +104,9 @@ public class CblMenu {
         }
     }
 
-    private void addSubmissionToProject() throws IOException {
-        //Listagem de todas as submiçoes disponiveis
-        //Algo que retorne a ediçao ativa
-        try {
+    private void addSubmissionToProjectOnActiveEdition() throws IOException {
+        /*try {
+            if(this.returnIndexToActiveEdition() != -1){
             System.out.print("Write the student email: ");
             String studentEmail = reader.readLine();
             System.out.print("Write the project name: ");
@@ -279,22 +115,23 @@ public class CblMenu {
             String taskTitle = reader.readLine();
             System.out.print("Write the submission text: ");
             String submissionText = reader.readLine();
-            System.out.println("Select the Submission");
-            SubmissionImpl submission = new SubmissionImpl(LocalDateTime.now(), (StudentImpl) cbl.returnEdition(0).getProject(projectName).getParticipant(studentEmail), submissionText);
+            SubmissionImpl submission = new SubmissionImpl(LocalDateTime.now(), (StudentImpl) cbl.returnEdition(this.returnIndexToActiveEdition()).getProject(projectName).getParticipant(studentEmail), submissionText);
             cbl.addProjectSubmissionToActiveEdition(submission, studentEmail, projectName, taskTitle);
+            }
+            else{
+                System.out.println("Active Edition not Found");
+            }
         } catch (InvalidIndexException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);;
         } catch (InvalidProjectNameException e) {
-            throw new RuntimeException(e);
-        }
+            System.out.println(e);;
+        }*/
     }
-
     public void cblManagementMenu() throws IOException {
         int option;
         do {
-            // Faz sentido termos dois addProject's? um no cblManagement e outro no editionManagement???
-            option = menuRead("Cbl Menu:\n 1 - Add Edition\n 2 - Remove Edition\n 3 - Edit Edition\n 4 - Set Active Edition" +
-                    "\n 6 - Add Submission to Project\n 7 - Cbl Stats\n Option: ", 0, 7);
+            option = Helper.menuRead("Cbl Menu:\n 1 - Add Edition\n 2 - Remove Edition\n 3 - Edit Edition\n 4 - Set Active Edition" +
+                    "\n 5 - Add Submission to Active Edition Project\n 6 - Cbl Statistics\n Option: ", 0, 5);
             switch (option) {
                 case 1:
                     this.addEditionHandler();
@@ -308,11 +145,11 @@ public class CblMenu {
                 case 4:
                     this.setActiveEditionHandler();
                     break;
-                case 6:
-                    this.addSubmissionToProject();
+                case 5:
+                    this.addSubmissionToProjectOnActiveEdition();
                     break;
-                case 7:
-                    this.cblStats();
+                case 6:
+                    //CblStatsMenu();
                     break;
             }
         } while (option != 0);

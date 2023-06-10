@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Helper {
-    private static BufferedReader reader;
-    Helper() {
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
-    }
     public static int menuRead(String message, int min, int max) {
         int option;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         do {
             System.out.print(message);
             try {
