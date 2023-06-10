@@ -17,7 +17,9 @@ import exceptions.EditionAlreadyInListException;
 import exceptions.InvalidIndexException;
 import exceptions.InvalidProjectNameException;
 import ma02_resources.participants.InstituitionType;
+import ma02_resources.participants.Participant;
 import ma02_resources.project.Edition;
+import ma02_resources.project.Project;
 import ma02_resources.project.Status;
 import participants.ContactImpl;
 import participants.StudentImpl;
@@ -170,20 +172,39 @@ public class ProgramaCBL {
                     " 8 - Is Completed?\n Option: ", 0, 8);
             switch(option){
                 case 1:
+                    /**
+                     * Existem vários objetos do tipo participant, como prosseguir?
+
+                    project.addParticipant(new ParticipantImpl() {
+                    }*/
                     break;
                 case 2:
+                    /**
+                     * Listagem de todos os participantes no projeto currente.
+                     */
+                    System.out.println("Participant email: ");
+                    String participantEmail = reader.readLine();
+                    try {
+                        project.removeParticipant(participantEmail);
+                    } catch (Exception e) {
+                        System.out.println("Email inválido.");
+                    }
                     break;
                 case 3:
                     //participantManagementMenu(reader);
                     break;
                 case 4:
+                    System.out.println(project.getNumberOfParticipants());
                     break;
                 case 5:
+                    System.out.println("New tag: ");
+                    String tag = reader.readLine();
+                    // que add tag???
                     break;
                 case 6:
                     break;
                 case 7:
-                    tasksManagementMenu(cbl, reader);
+                    //tasksManagementMenu(cbl, reader);
                     break;
                 case 8:
                     break;
