@@ -14,10 +14,12 @@ public class EditionMenu {
 
     CblManagement cbl;
     BufferedReader reader;
+    ProjectMenu projectMenu;
 
     public EditionMenu(CblManagement cbl) {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.cbl = cbl;
+        projectMenu = new ProjectMenu(cbl);
     }
 
     private void returnProjectsText(int editionIndex){
@@ -58,7 +60,7 @@ public class EditionMenu {
         try {
             System.out.println("Project name: ");
             String projectName = reader.readLine();
-            //projectManagementMenu(cbl.returnEdition(editionIndex).getProject(projectName));
+            projectMenu.projectManagementMenu(cbl.returnEdition(editionIndex).getProject(projectName));
         } catch (IllegalArgumentException e) {
             System.out.println("The given project name was not found");
         }
