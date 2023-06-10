@@ -1,4 +1,4 @@
-package programacbl;
+package programacbl.Menu;
 
 import exceptions.EditionAlreadyInListException;
 import exceptions.InvalidIndexException;
@@ -20,15 +20,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class CblHandler {
+public class CblMenu {
     CblManagement cbl;
     BufferedReader reader;
 
-    public CblHandler() {
+    public CblMenu() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.cbl = new CblManagement();
     }
-
     public int menuRead(String message, int min, int max) {
         int option;
         do {
@@ -221,7 +220,7 @@ public class CblHandler {
     }
 
     private void removeProjectHandler(int editionIndex) throws IOException {
-        
+
     }
     private void editionManagementMenu(int editionIndex) throws IOException {
         int option;
