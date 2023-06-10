@@ -10,7 +10,6 @@ import participants.StudentImpl;
 import project.CblManagement;
 import project.EditionImpl;
 import project.SubmissionImpl;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +18,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+import programacbl.Menu.*;
 public class CblMenu {
     CblManagement cbl;
     BufferedReader reader;
@@ -28,35 +27,11 @@ public class CblMenu {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.cbl = new CblManagement();
     }
-    public int menuRead(String message, int min, int max) {
-        int option;
-        do {
-            System.out.print(message);
-            try {
-                String input = reader.readLine();
-                if (input.equals("0")) {
-                    return 0;
-                }
-                option = Integer.parseInt(input);
-                if (option < min || option > max) {
-                    System.out.println("Opção inválida. Tente novamente.");
-                }
-            } catch (IOException e) {
-                System.out.println("Erro ao ler a opção. Tente novamente.");
-                option = -1;
-            } catch (NumberFormatException e) {
-                System.out.println("Opção inválida. Tente novamente.");
-                option = -1;
-            }
-        } while (option < min || option > max);
-
-        return option;
-    }
 
     private void cblStats() throws IOException {
         int option;
         do {
-            option = menuRead("Cbl Statistic Menu:\n 1 - Get Edition With Projects Missing Submissions\n " +
+            option = Helper.menuRead("Cbl Statistic Menu:\n 1 - Get Edition With Projects Missing Submissions\n " +
                     "2 - Get Projects With Missing Submissions\n 3 - Get Number Of Projects in Edition" +
                     "\n 4 - Get Edition Progress\n 5 - Get Project Progress in Edition\n 6 - List Edition Information" +
                     "\n 7 - List Project Information By Edition\n 8 - List Project Status By Edition \nOption: ", 0, 9);
@@ -133,7 +108,7 @@ public class CblMenu {
     private void tasksManagementMenu(CblManagement cbl, BufferedReader reader) throws IOException {
         int option;
         do {
-            option = menuRead("Task Menu:\n 1 - Add Submission\n 2 - Extend DeadLine\n Option: ", 0, 2);
+            option = Helper.menuRead("Task Menu:\n 1 - Add Submission\n 2 - Extend DeadLine\n Option: ", 0, 2);
             switch (option) {
                 case 1:
                     /**
@@ -149,50 +124,6 @@ public class CblMenu {
         } while (option != 0);
     }
 
-    private void projectManagementMenu(Project project) throws IOException {
-        int option;
-        do {
-            option = menuRead("Project Menu:\n 1 - Add Participant\n 2 - Remove Participant\n 3 - Get Participant\n" +
-                    " 4 - Get Number Of Participants  \n 5 - Add Task \n 6 - Get Task \n" +
-                    " 7 - Is Completed?\n Option: ", 0, 8);
-            switch (option) {
-                case 1:
-                    /**
-                     * Existem vários objetos do tipo participant, como prosseguir?
-
-                     project.addParticipant(new ParticipantImpl() {
-                     }*/
-                    break;
-                case 2:
-                    /**
-                     * Listagem de todos os participantes no projeto currente.
-                     */
-                    System.out.println("Participant email: ");
-                    String participantEmail = reader.readLine();
-                    try {
-                        project.removeParticipant(participantEmail);
-                    } catch (Exception e) {
-                        System.out.println("Email inválido.");
-                    }
-                    break;
-                case 3:
-                    //participantManagementMenu(reader);
-                    break;
-                case 4:
-                    System.out.println(project.getNumberOfParticipants());
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    //tasksManagementMenu(cbl, reader);
-                    break;
-                case 8:
-                    break;
-            }
-        } while (option != 0);
-    }
 
     private void addProjectHandler(int editionIndex) throws IOException {
         //Listagem de todas as edições disponíveis (por número index).
@@ -226,7 +157,7 @@ public class CblMenu {
         int option;
         Edition currentEdition = cbl.returnEdition(editionIndex);
         do {
-            option = menuRead("Edition Menu:\n 1 - Add Project\n 2 - Remove Project\n 3 - Get Project\n 4 - Get Projects By Tag " +
+            option = Helper.menuRead("Edition Menu:\n 1 - Add Project\n 2 - Remove Project\n 3 - Get Project\n 4 - Get Projects By Tag " +
                     "\n 5 - Get Projects By Email \n 6 - Get Number Of Projects \n 7 - Get End Date.\n Option: ", 0, 7);
             switch (option) {
                 case 1:
