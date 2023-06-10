@@ -168,8 +168,8 @@ public class ProgramaCBL {
         int option;
         do{
             option = menuRead(reader, "Project Menu:\n 1 - Add Participant\n 2 - Remove Participant\n 3 - Get Participant\n" +
-                    " 4 - Get Number Of Participants  \n 5 - Add Tag  \n 6 - Add Task \n 7 - Get Task \n" +
-                    " 8 - Is Completed?\n Option: ", 0, 8);
+                    " 4 - Get Number Of Participants  \n 5 - Add Task \n 6 - Get Task \n" +
+                    " 7 - Is Completed?\n Option: ", 0, 8);
             switch(option){
                 case 1:
                     /**
@@ -197,9 +197,6 @@ public class ProgramaCBL {
                     System.out.println(project.getNumberOfParticipants());
                     break;
                 case 5:
-                    System.out.println("New tag: ");
-                    String tag = reader.readLine();
-                    // que add tag???
                     break;
                 case 6:
                     break;
