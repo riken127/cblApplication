@@ -22,12 +22,21 @@ public class EditionMenu {
         projectMenu = new ProjectMenu(cbl);
     }
 
+    /**
+     * prints all the projects of a given edition.
+     * @param editionIndex given edition index.
+     */
     private void returnProjectsText(int editionIndex){
         for(int i = 0;i<cbl.returnEdition(editionIndex).getNumberOfProjects();i++){
             System.out.println("Name - " + cbl.returnEdition(editionIndex).getProjects()[i].getName());
         }
     }
 
+    /**
+     * Adds a project to the specified edition.
+     * @param editionIndex The index of the edition to which the project will be added.
+     * @throws IOException If an I/O occurs while reading user input.
+     */
     private void addProjectHandler(int editionIndex) throws IOException {
             System.out.println("Type the given project name:");
             String name = reader.readLine();
@@ -45,6 +54,11 @@ public class EditionMenu {
             }
     }
 
+    /**
+     * Removes a project from the edition at the specified index.
+     * @param editionIndex The index of the edition from which to remove the project.
+     * @throws IOException If an I/O exception occurs.
+     */
     private void removeProjectHandler(int editionIndex) throws IOException {
         this.returnProjectsText(editionIndex);
         try {
@@ -55,6 +69,12 @@ public class EditionMenu {
             System.out.println("The given project name was not found.");
         }
     }
+
+    /**
+     * Handles editing of a project
+     * @param editionIndex The index of the edition in which a project is located.
+     * @throws IOException If an I/O error occurs.
+     */
     private void editProjectHandler(int editionIndex) throws IOException {
         this.returnProjectsText(editionIndex);
         try {
@@ -65,6 +85,12 @@ public class EditionMenu {
             System.out.println("The given project name was not found");
         }
     }
+
+    /**
+     * Retrieves projects based on a specified tag for a given edition.
+     * @param editionIndex The index of the edition to search within.
+     * @throws IOException If an I/O occurs while reading the input.
+     */
     private void getProjectsByTag(int editionIndex) throws IOException {
         System.out.println("Project tag: ");
         String projectTag = reader.readLine();
@@ -75,6 +101,11 @@ public class EditionMenu {
         }
     }
 
+    /**
+     * Retrieves projects by email for a given edition.
+     * @param editionIndex the index of the edition.
+     * @throws IOException if an I/O error occurs.
+     */
     private void getProjectsByEmail(int editionIndex) throws IOException {
         System.out.println("Student email: ");
         String studentEmail = reader.readLine();
@@ -84,6 +115,12 @@ public class EditionMenu {
             }
         }
     }
+
+    /**
+     * Manages the edition menu for a specific edition.
+     * @param editionIndex The index of the edition.
+     * @throws IOException If an I/O error occurs.
+     */
     public void editionManagementMenu(int editionIndex) throws IOException {
         int option;
         Edition currentEdition = cbl.returnEdition(editionIndex);
