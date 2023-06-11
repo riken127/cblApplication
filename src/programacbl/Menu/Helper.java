@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Helper {
+    /**
+     * Reads an integer input from the user within a specified range.
+     * @param message the message to display to user as a prompt
+     * @param min the minimum allowed value for the input.
+     * @param max the maximum allowed value for the input
+     * @return the users input as an integer within the specified range.
+     */
     public static int menuRead(String message, int min, int max) {
         int option;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
