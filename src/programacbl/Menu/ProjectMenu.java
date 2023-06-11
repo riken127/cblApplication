@@ -52,6 +52,7 @@ public class ProjectMenu {
     ProjectMenu(CblManagement cbl) {
         this.cbl = cbl;
         this.taskMenu = new TaskMenu(cbl);
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
     private InstituitionType getInsituitionType() throws IOException{
         int option;

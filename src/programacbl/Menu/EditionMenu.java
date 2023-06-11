@@ -39,9 +39,9 @@ public class EditionMenu {
             try {
                 cbl.addProjectToEdition(editionIndex, name, description, tags);
             } catch (InvalidIndexException e) {
-                System.out.println(e);
+                System.out.println("Invalid index.");
             } catch (ParseException e) {
-                System.out.println(e);
+                System.out.println("An error has occurred while trying to read the json template.");
             }
     }
 

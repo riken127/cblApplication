@@ -8,6 +8,7 @@ import project.SubmissionImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class TaskMenu {
     private static String ASK_EXTEND_DEADLINE_BY = "Extend Deadline by:\t";
     public TaskMenu(CblManagement cbl) {
         this.cbl = cbl;
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
     private void printAllTasks(Task[] tasks, int numberOfTasks) {
         for(int i = 0; i < numberOfTasks; i++) {

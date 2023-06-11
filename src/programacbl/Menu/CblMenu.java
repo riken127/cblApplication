@@ -23,16 +23,18 @@ public class CblMenu {
     CblManagement cbl;
     BufferedReader reader;
     EditionMenu editionMenu;
+    CblStatsMenu cblStatsMenu;
 
     public CblMenu() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.cbl = new CblManagement();
         this.editionMenu = new EditionMenu(cbl);
+        this.cblStatsMenu = new CblStatsMenu(cbl);
     }
 
     private int returnIndexToActiveEdition(){
         for(int i = 0;i<cbl.returnNumberOfEditions();i++){
-            if(cbl.returnEdition(i).getStatus().equals(Status.ACTIVE)){
+            if(cbl.returnEdition(i).getStatus() == Status.ACTIVE){
                 return i;
             }
         }
@@ -105,27 +107,27 @@ public class CblMenu {
     }
 
     private void addSubmissionToProjectOnActiveEdition() throws IOException {
-        /*try {
+        try {
             if(this.returnIndexToActiveEdition() != -1){
-            System.out.print("Write the student email: ");
-            String studentEmail = reader.readLine();
-            System.out.print("Write the project name: ");
-            String projectName = reader.readLine();
-            System.out.print("Write the task title: ");
-            String taskTitle = reader.readLine();
-            System.out.print("Write the submission text: ");
-            String submissionText = reader.readLine();
-            SubmissionImpl submission = new SubmissionImpl(LocalDateTime.now(), (StudentImpl) cbl.returnEdition(this.returnIndexToActiveEdition()).getProject(projectName).getParticipant(studentEmail), submissionText);
-            cbl.addProjectSubmissionToActiveEdition(submission, studentEmail, projectName, taskTitle);
+                System.out.print("Write the student email: ");
+                String studentEmail = reader.readLine();
+                System.out.print("Write the project name: ");
+                String projectName = reader.readLine();
+                System.out.print("Write the task title: ");
+                String taskTitle = reader.readLine();
+                System.out.print("Write the submission text: ");
+                String submissionText = reader.readLine();
+                SubmissionImpl submission = new SubmissionImpl(LocalDateTime.now(), (StudentImpl) cbl.returnEdition(this.returnIndexToActiveEdition()).getProject(projectName).getParticipant(studentEmail), submissionText);
+                cbl.addProjectSubmissionToActiveEdition(submission, studentEmail, projectName, taskTitle);
             }
             else{
-                System.out.println("Active Edition not Found");
+                System.out.println("Active Edition was not found.");
             }
         } catch (InvalidIndexException e) {
-            System.out.println(e);;
+            System.out.println("The given index is invalid.");
         } catch (InvalidProjectNameException e) {
-            System.out.println(e);;
-        }*/
+            System.out.println("The given project name is invalid.");
+        }
     }
     public void cblManagementMenu() throws IOException {
         int option;
@@ -149,7 +151,7 @@ public class CblMenu {
                     this.addSubmissionToProjectOnActiveEdition();
                     break;
                 case 6:
-                    //CblStatsMenu();
+                    this.cblStatsMenu.cblStatsMenu();
                     break;
             }
         } while (option != 0);
