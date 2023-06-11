@@ -21,11 +21,24 @@ public class TaskMenu {
         this.cbl = cbl;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
+
+    /**
+     * Prints all the tasks with their details
+     * @param tasks an array of tasks to be printed
+     * @param numberOfTasks the number of tasks to be printed
+     */
     private void printAllTasks(Task[] tasks, int numberOfTasks) {
         for(int i = 0; i < numberOfTasks; i++) {
             System.out.println((i+1) + " " + tasks[i].getTitle() + " " + tasks[i].getNumberOfSubmissions() + " " + tasks[i].getDescription());
         }
     }
+
+    /**
+     * Adds a submission to the desired task.
+     * @param task the task which the submission is added.
+     * @param student the student submitting the task.
+     * @throws IOException if an I/O error occurs while reading the submission text.
+     */
     private void addSubmissionToDesiredTask(Task task, Student student) throws IOException{
         LocalDateTime date = LocalDateTime.now();
         String submissionText;
@@ -35,6 +48,11 @@ public class TaskMenu {
         task.addSubmission(new SubmissionImpl(date, student, submissionText));
     }
 
+    /**
+     * Extends the deadline of the desired task.
+     * @param task the task whose deadlines is being extended
+     * @throws IOException if an I/O error occurs while reading the duration.
+     */
     private void extendDesiredTaskDeadline(Task task) throws IOException{
         String durationString;
         int duration;
@@ -43,6 +61,12 @@ public class TaskMenu {
         duration = Integer.parseInt(durationString);
         task.extendDeadline(duration);
     }
+
+    /**
+     * Manages tasks in the project, providing options to add submissions and extend deadlines for a selected task.
+     * @param project the project for which tasks are managed
+     * @throws IOException if an I/O error occurs while reading input.
+     */
     public void tasksManagementMenu(Project project) throws IOException {
         int option;
         String taskName;
