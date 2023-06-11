@@ -130,7 +130,11 @@ public class EditionMenu {
                     "\n 5 - Get Projects By Email \n 6 - Get Number Of Projects \n 7 - Get End Date.\n Option: ", 0, 7);
             switch (option) {
                 case 1:
-                    addProjectHandler(editionIndex);
+                    try {
+                        addProjectHandler(editionIndex);
+                    } catch (IOException e) {
+                        System.out.println("An error has occured while adding the project.");
+                    }
                     break;
                 case 2:
                     removeProjectHandler(editionIndex);
