@@ -54,6 +54,12 @@ public class ProjectMenu {
         this.taskMenu = new TaskMenu(cbl);
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
+
+    /**
+     * Reads the instituition type from the user.
+     * @return the selected intituition type as an instance of InstituitionType.
+     * @throws IOException If an error occurs while reading the input.
+     */
     private InstituitionType getInsituitionType() throws IOException{
         int option;
         System.out.println(INSTITUITION_TYPE_OPTIONS);
@@ -75,6 +81,12 @@ public class ProjectMenu {
         } while(option < 0 && option > 4);
         return null;
     }
+
+    /**
+     * Retrieves contact information from the user.
+     * @return a ContactImpl object containing the contact information
+     * @throws IOException if an error occurs while reading the user input.
+     */
     private ContactImpl getContactInformation() throws IOException {
         String street, city, state, zipCode, country, phone;
         System.out.println(ASK_CONTACT_STREET_MESSAGE);
@@ -92,6 +104,12 @@ public class ProjectMenu {
 
         return new ContactImpl(street, city, state, zipCode, country, phone);
     }
+
+    /**
+     * Retrieves and constructs an instance of InstituitionImpl with user-provided information.
+     * @return an instance of InstituitionImpl with the filled information.
+     * @throws IOException if an error occurs while reading user input.
+     */
     private InstituitionImpl getInstituitionInformation() throws IOException {
         String name, email, website, description;
         InstituitionType type;
@@ -111,6 +129,11 @@ public class ProjectMenu {
         return new InstituitionImpl(name, email, type, contact, website, description);
     }
 
+    /**
+     * Adds a participant by collecting their information.
+     * @return the created Participant object
+     * @throws IOException if an error occurs while reading input.
+     */
     private Participant addParticipant() throws IOException{
         String name, email;
         InstituitionImpl instituition = getInstituitionInformation();
@@ -123,11 +146,29 @@ public class ProjectMenu {
 
         return new ParticipantImpl(name, email, instituition, contact);
     }
+
+    /**
+     * Adds a facilitator to the current project
+     * @param project the project to add the facilitator to
+     * @param participantBasicInfo the basic information of the participant to be added as a facilitator
+     * @throws IOException if there is an error while reading input
+     * @throws ParticipantAlreadyInProject if the participant is already added to the project
+     * @throws IllegalNumberOfParticipantType if the number of participants of the specified type exceeds the limit.
+     */
     private void addFacilitatorToCurrentProject(Project project, Participant participantBasicInfo) throws IOException, ParticipantAlreadyInProject, IllegalNumberOfParticipantType {
         System.out.println(ASK_FACILITATOR_AREA_OF_EXPERTISE);
         String expertise = reader.readLine();
         project.addParticipant(new FacilitatorImpl(participantBasicInfo.getName(), participantBasicInfo.getEmail(), (InstituitionImpl) participantBasicInfo.getInstituition(), participantBasicInfo.getContact(), expertise));
     }
+
+    /**
+     * Adds a partner to the current project.
+     * @param project the project to add the partner to.
+     * @param participantBasicInfo the basic information of the participant.
+     * @throws IOException if an I/O error occurs while reading input.
+     * @throws ParticipantAlreadyInProject if the participant is already added to the project.
+     * @throws IllegalNumberOfParticipantType if the number of participant types exceeds the limit.
+     */
     private void addPartnerToCurrentProject(Project project, Participant participantBasicInfo) throws IOException, ParticipantAlreadyInProject, IllegalNumberOfParticipantType {
         String vat, website;
         System.out.println(ASK_PARTNER_VAT);
@@ -136,6 +177,15 @@ public class ProjectMenu {
         website = reader.readLine();
         project.addParticipant(new PartnerImpl(participantBasicInfo.getName(), participantBasicInfo.getEmail(), (InstituitionImpl) participantBasicInfo.getInstituition(), participantBasicInfo.getContact(), vat, website));
     }
+
+    /**
+     * Adds a student participant to the current project.
+     * @param project the project to which  the participant will be added.
+     * @param participantBasicInfo the basic information of the participant.
+     * @throws IOException if there is an error reading the student number.
+     * @throws ParticipantAlreadyInProject if the participant is already associated with the project.
+     * @throws IllegalNumberOfParticipantType if the participant type is valid.
+     */
     private void addStudentToCurrentProject(Project project, Participant participantBasicInfo) throws IOException, ParticipantAlreadyInProject, IllegalNumberOfParticipantType {
         int number;
         String numberInString;
@@ -144,6 +194,14 @@ public class ProjectMenu {
         number = Integer.parseInt(numberInString);
         project.addParticipant(new StudentImpl(participantBasicInfo.getName(), participantBasicInfo.getEmail(), (InstituitionImpl) participantBasicInfo.getInstituition(), participantBasicInfo.getContact(), number));
     }
+
+    /**
+     * Adds a participant to the current project.
+     * @param project the project to add the participants to
+     * @throws IOException if an error occurs while reading input.
+     * @throws ParticipantAlreadyInProject if the participant is already in the project.
+     * @throws IllegalNumberOfParticipantType if the participant type is invalid.
+     */
     private void addParticipantToCurrentProject(Project project) throws IOException, ParticipantAlreadyInProject, IllegalNumberOfParticipantType {
         Participant basicInfo = addParticipant();
         System.out.println(this.ASK_PARTICIPANT_TYPE_MESSAGE);
@@ -163,6 +221,12 @@ public class ProjectMenu {
                 break;
         }
     }
+
+    /**
+     * Removes a participant from the current project.
+     * @param project the project from which to remove the participant
+     * @throws IOException if an I/O occurs while reading the participant's email.
+     */
     private void removeParticipantFromCurrentProject(Project project) throws IOException {
         System.out.println(ASK_PARTICIPANT_EMAIL_MESSAGE);
         String email = reader.readLine();
@@ -173,6 +237,13 @@ public class ProjectMenu {
         }
     }
 
+    /**
+     * Adds a task to the current project.
+     * @param project the project to which the task will be added.
+     * @throws IOException if an I/O error occurs while reading task details.
+     * @throws TaskAlreadyInProject if the task is already present in the project.
+     * @throws IllegalNumberOfTasks if adding the task exceeds the maximum allowed number of tasks in the project.
+     */
     private void addTaskToCurrentProject(Project project) throws IOException, TaskAlreadyInProject, IllegalNumberOfTasks {
         LocalDate start, end;
         String title, description, startString, endString;
@@ -189,6 +260,12 @@ public class ProjectMenu {
         end = LocalDate.parse(endString, formatter);
         project.addTask(new TaskImpl(start, end, title, description));
     }
+
+    /**
+     * Displays the project management menu and performs various operations based on user input.
+     * @param project the project to perform management operations on.
+     * @throws IOException if an I/O occurs.
+     */
     public void projectManagementMenu(Project project) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int option;
