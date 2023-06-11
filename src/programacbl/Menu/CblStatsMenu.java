@@ -20,6 +20,12 @@ public class CblStatsMenu {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    /**
+     * The listEditionsWithMissingSubmissionsInTasks, method retrieves editions that have
+     * missing submissions in tasks.
+     * Is uses the cbl object to call the "returnEditionsWithProjectsMissingSubmissionsInTasks" method, which
+     * returns an array of "Edition" objects.
+     */
     private void listEditionsWithMissingSubmissionsInTasks() {
         Edition[] editions = cbl.returnEditionsWithProjectsMissingSubmissionsInTasks();
         System.out.println("Editions with missing submissions in tasks.");
@@ -28,6 +34,11 @@ public class CblStatsMenu {
         }
     }
 
+    /**
+     * Lists projects with missing submissions for a given index.
+     * @throws IOException if an I/O error occurs while reading input.
+     * @throws InvalidIndexException If the index is invalid.
+     */
     private void listProjectsWithMissingSubmissions() throws IOException, InvalidIndexException {
         listEditions();
 
@@ -42,6 +53,16 @@ public class CblStatsMenu {
         }
     }
 
+    /**
+     * Lists the progress of an edition
+     * Calls the listEditions method
+     * Prompt the user to enter the edition index.
+     * Check if the edition at the specified index exists
+     * Retrieve the edition at the specified index.
+     * Display the edition progress.
+     * Handles the exception if an invalid index is provided.
+     * @throws IOException if an I/O error occurs while reading user input.
+     */
     private void listEditionProgress() throws IOException{
         listEditions();
         System.out.println(ASK_EDITION_INDEX);
@@ -58,6 +79,14 @@ public class CblStatsMenu {
         }
     }
 
+    /**
+     * Lists the progress of a project based on user input.
+     * Checks if the edition at the specified index exists.
+     * Prints the projects of the specified edition.
+     * return project progress if not null.
+     * @throws IOException if an I/O error occurs while reading user input.
+     * @throws InvalidIndexException If the provided index is invalid.
+     */
     private void listProjectProgress() throws IOException, InvalidIndexException {
         listEditions();
         System.out.println(ASK_EDITION_INDEX);
@@ -69,10 +98,16 @@ public class CblStatsMenu {
             String projectName = reader.readLine();
             System.out.println("Project progress.");
             System.out.println(cbl.returnProjectProgress(index, projectName));
+        }else {
+            System.out.println("The given index is invalid.");
         }
 
     }
 
+    /**
+     * Lists all the projects in the given projects array, makes sure to verify is the position "i" is not null.
+     * @param projects array of given projects.
+     */
     private void listGivenProjects(Project[] projects) {
         for (int i = 0; i < projects.length; i++) {
             if (projects[i] != null) {
@@ -80,25 +115,44 @@ public class CblStatsMenu {
             }
         }
     }
+
+    /**
+     * Lists the number of editions in a given index.
+     * Prompts the user for an edition index.
+     * If the given index is not null, prints the number of editions.
+     * @throws IOException
+     */
     private void listNumberOfProjectsInEdition() throws IOException{
         listEditions();
         System.out.println(ASK_EDITION_INDEX);
         String indexString = reader.readLine();
         int index = Integer.parseInt(indexString);
-        if (cbl.returnEdition(index) != null) {
+        if (cbl.returnEdition(index - 1) != null) {
             System.out.println("Number of projects in the given index.");
             System.out.println(cbl.returnEdition(index).getNumberOfProjects());
+        }else {
+            System.out.println("The given index is invalid.");
         }
     }
 
+    /**
+     * Lists all the editions in the cbl.
+     * call the function ".returnEditionList()", and then
+     * prints every non-null element in the array.
+     */
     private void listEditions() {
         Edition[] editions = cbl.returnEditionList();
         System.out.println("Available Editions.");
         for (int i = 0; i < cbl.returnNumberOfEditions(); i++) {
-            System.out.println((i+1) + " " + editions[i].getName() + " " + editions[i].getNumberOfProjects());
+            if (editions[i] != null) {
+                System.out.println((i + 1) + " " + editions[i].getName() + " " + editions[i].getNumberOfProjects());
+            }
         }
     }
 
+    /**
+     *  Displays the CBL Statistics Menu and performs corresponding actions based on user input.
+     */
     public void cblStatsMenu() {
         int option;
         do {
