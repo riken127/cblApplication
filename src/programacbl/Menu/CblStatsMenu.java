@@ -1,3 +1,12 @@
+/*
+ * Nome: <João Pedro Salgado Pereira>
+ * Número: <8220102>
+ * Turma: <LEI1T4>
+ *
+ * Nome: <José Henrique Noronha Oliveira e Silva>
+ * Número: <8220343>
+ * Turma: <LEI1T4>
+ */
 package programacbl.Menu;
 
 import exceptions.InvalidIndexException;
@@ -141,13 +150,13 @@ public class CblStatsMenu {
      * prints every non-null element in the array.
      */
     private void listEditions() {
-        Edition[] editions = cbl.returnEditionList();
+        /*Edition[] editions = cbl.returnEditionList();
         System.out.println("Available Editions.");
         for (int i = 0; i < cbl.returnNumberOfEditions(); i++) {
             if (editions[i] != null) {
                 System.out.println((i + 1) + " " + editions[i].getName() + " " + editions[i].getNumberOfProjects());
             }
-        }
+        }*/
     }
 
     /**

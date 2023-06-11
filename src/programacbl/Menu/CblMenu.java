@@ -1,3 +1,12 @@
+/*
+ * Nome: <João Pedro Salgado Pereira>
+ * Número: <8220102>
+ * Turma: <LEI1T4>
+ *
+ * Nome: <José Henrique Noronha Oliveira e Silva>
+ * Número: <8220343>
+ * Turma: <LEI1T4>
+ */
 package programacbl.Menu;
 
 import exceptions.EditionAlreadyInListException;
@@ -193,7 +202,7 @@ public class CblMenu {
         int option;
         do {
             option = Helper.menuRead("Cbl Menu:\n 1 - Add Edition\n 2 - Remove Edition\n 3 - Edit Edition\n 4 - Set Active Edition" +
-                    "\n 5 - Add Submission to Active Edition Project\n 6 - Cbl Statistics\n Option: ", 0, 5);
+                    "\n 5 - Add Submission to Active Edition Project\n 6 - Cbl Statistics\n Option: ", 0, 6);
             switch (option) {
                 case 1:
                     this.addEditionHandler();
